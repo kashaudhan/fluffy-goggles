@@ -13,7 +13,6 @@ import { Switch, Route } from 'react-router-dom';
 import Home from 'containers/Home/Loadable';
 import Labels from 'containers/Labels/index';
 
-
 export default function App() {
   return (
     <div>

@@ -17,7 +17,6 @@ const Labels = () => {
   const [hasApplied, setHasApplied] = useState(false);
 
   const handleOpChange = op => {
-    console.log('Value: ', op);
     setOpType(op);
   };
 
@@ -79,7 +78,6 @@ const Labels = () => {
         { headers: { user_id: '24b456' } },
       );
       setCallList(resp.data.data.call_data);
-      console.log('Call List: ', resp.data);
     })();
     (async () => {
       const resp = await axios.get(
@@ -87,27 +85,22 @@ const Labels = () => {
         { headers: { user_id: '24b456' } },
       );
       setLabelsList(resp.data.data.unique_label_list);
-      console.log('Lost of Labels: ', resp.data);
     })();
   }, [hasApplied]);
 
   const handleRemoveFromOpList = x => {
-    console.log('index: ', x);
     const temp = opList.slice(opList.indexOf(x));
     if (opList.length <= 1) {
       setOpList([]);
     } else {
       setOpList(temp);
     }
-    console.log('OpList: ', temp);
   };
   const onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     setSelectedRows(selectedRowKeys);
   };
 
   const handleCallName = val => {
-    console.log(val.target.value);
     setInputName(val.target.value);
   };
   const rowSelection = {
@@ -116,7 +109,6 @@ const Labels = () => {
   };
   const handleAddToApply = () => {
     setOpList([...opList, { name: inputName, op: opType }]);
-    console.log('Op List: ', opList);
   };
 
   const handleApply = async () => {
@@ -130,7 +122,6 @@ const Labels = () => {
       },
       { headers: { user_id: '24b456' } },
     );
-    console.log('Apply Labels: ', resp.data);
     setCallList(resp.data.data.call_data);
     setOpList([]);
     setHasApplied(!hasApplied);

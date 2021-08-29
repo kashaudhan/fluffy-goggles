@@ -111,12 +111,10 @@ export function Home() {
     );
     setFilterResult(resp.data.data);
     setIsFilterRequested(true);
-    console.log('Response: ', resp.data.data);
   };
 
   const addFilterAgentName = e => {
     setInputAgentList(e);
-    console.log('Data: ', e);
   };
 
   const handleClear = () => {

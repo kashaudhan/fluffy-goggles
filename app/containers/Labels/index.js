@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './styles/styles.css';
-import { Table, Tag, Input, Select, Button, Space } from 'antd';
+import { Table, Tag, Input, Select, Button } from 'antd';
+import { Link } from 'react-router-dom';
+
 const { Option } = Select;
 
 const Labels = () => {
   const [callList, setCallList] = useState([]);
   const [labelsList, setLabelsList] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-  const [labelOps, setLabelOps] = useState('');
+  // const [labelOps, setLabelOps] = useState('');
   const [inputName, setInputName] = useState('');
   const [opType, setOpType] = useState('add');
   const [opList, setOpList] = useState([]);
@@ -62,7 +64,7 @@ const Labels = () => {
       key: 'action',
       render: x => (
         <div size="middle">
-          <Button onClick={e => handleRemoveFromOpList(x)} size="small">
+          <Button onClick={() => handleRemoveFromOpList(x)} size="small">
             Remove
           </Button>
         </div>
@@ -137,6 +139,9 @@ const Labels = () => {
   return (
     <div className="part2">
       <div className="page2_body">
+        <Button type="primary">
+          <Link to="/">Goto Hone</Link>
+        </Button>
         <Table
           rowSelection={rowSelection}
           columns={labelsListColumn}

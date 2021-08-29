@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -13,7 +14,7 @@ import reducer from './reducer';
 import saga from './saga';
 import './styles/styles.css';
 
-import { Table } from "antd";
+import { Table, Input, Button } from 'antd';
 import Multiselect from 'multiselect-react-dropdown';
 
 export function Home() {
@@ -30,12 +31,11 @@ export function Home() {
   const [maxDuration, setMaxDuration] = useState(0);
   const [inputAgentList, setInputAgentList] = useState([]);
   const [filterResult, setFilterResult] = useState([]);
-  const [isFilterRequested, setIsFilterRequested] = useState(false)
-
+  const [isFilterRequested, setIsFilterRequested] = useState(false);
 
   const agentListColumn = [
     {
-      title: "Agent Name",
+      title: 'Agent Name',
       key: 'index',
       onFilter: (value, record) => record.name.indexOf(value) === 0,
       sorter: (a, b) => (a.name > b.name ? -1 : 1),
@@ -44,7 +44,7 @@ export function Home() {
 
   const filterAgentListColumn = [
     {
-      title: "Agent Name",
+      title: 'Agent Name',
       dataIndex: 'agent_id',
       key: 'agent_id',
       sorter: (a, b) => (a.name > b.name ? -1 : 1),
@@ -53,16 +53,16 @@ export function Home() {
       title: 'Call ID',
       dataIndex: 'call_id',
       key: 'call_id',
-      defaultSortOrder: "descend",
-      sorter: (a, b) => a.call_id - b.call_id
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.call_id - b.call_id,
     },
     {
       title: 'Call Time',
       dataIndex: 'call_time',
       key: 'call_time',
-      defaultSortOrder: "descend",
-      sorter: (a, b) => a.call_time - b.call_time
-    }
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.call_time - b.call_time,
+    },
   ];
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export function Home() {
     setInputAgentList(e);
     console.log('Data: ', e);
   };
-  
+
   const handleClear = () => {
     setMinDuration(0);
     setMaxDuration(0);
@@ -128,40 +128,53 @@ export function Home() {
   };
 
   return (
-    <div>
-      <h2>List of Agents</h2>
-      <Table columns={agentListColumn} dataSource={listOfAgents}/>
-      <h3>Filter</h3>
-      <button type="button" onClick={getFilteredCalls}>
-        Get Filtered Calls
-      </button>
-      <div className="">
-        <h5>
-          Duration Range: {durationRange.minimum.toFixed(2)} -{' '}
-          {durationRange.maximum.toFixed(2)}
-        </h5>
+    <div className="home">
+      <div className="page1">
+        <Button type="primary">
+          <Link to="/part2">Goto Part 2</Link>
+        </Button>
+        <h2>List of Agents</h2>
+        <Table columns={agentListColumn} dataSource={listOfAgents} />
+        <h3>Filter</h3>
+        <div className="">
+          <h5>
+            Duration Range: {durationRange.minimum.toFixed(2)} -{' '}
+            {durationRange.maximum.toFixed(2)}
+          </h5>
+        </div>
+        <div className="filter_section">
+          <Multiselect
+            showArrow
+            options={listOfAgents}
+            isObject={false}
+            onSelect={e => addFilterAgentName(e)}
+            // style={{ width: '30%' }}
+          />
+          <div className="duration_range">
+            <Input
+              type="number"
+              value={minDuration}
+              onChange={e => setMinDuration(e.target.value)}
+              prefix="Min: "
+            />
+            <Input
+              type="number"
+              value={maxDuration}
+              onChange={e => setMaxDuration(e.target.value)}
+              prefix="Max: "
+            />
+          </div>
+          <div className="filter_button_container">
+            <Button onClick={handleClear}>Clear</Button>
+            <Button type="primary" onClick={getFilteredCalls}>
+              Apply Filter
+            </Button>
+          </div>
+        </div>
+        {isFilterRequested ? (
+          <Table columns={filterAgentListColumn} dataSource={filterResult} />
+        ) : null}
       </div>
-      <Multiselect
-        showArrow
-        options={listOfAgents}
-        isObject={false}
-        onSelect={e => addFilterAgentName(e)}
-        style={{ width: '100px' }}
-      />
-      <input
-        type="number"
-        value={minDuration}
-        onChange={e => setMinDuration(e.target.value)}
-      />
-      <input
-        type="number"
-        value={maxDuration}
-        onChange={e => setMaxDuration(e.target.value)}
-      />
-      <button type="button" onClick={handleClear}>
-        Clear
-      </button>
-      {isFilterRequested ? <Table columns={filterAgentListColumn} dataSource={filterResult} /> : null}
     </div>
   );
 }

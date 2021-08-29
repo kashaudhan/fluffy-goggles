@@ -1,3 +1,37 @@
+
+.home{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.page1{
+    margin-top: 20px;
+    width: 80%;
+}
+.filter_section{
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0 50px 0;
+}
 .multiSelectContainer {
-    width: 350px !important;
+    width: 30% !important;
+}
+
+.duration_range{
+    margin: 0 10px 0 10px;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    height: 37px;
+}
+.duration_range span{
+    width: 45%;
+}
+.filter_button_container{
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+}
+button{
+    height: 37px !important;
 }

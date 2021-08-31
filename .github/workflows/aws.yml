@@ -33,4 +33,3 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_REGION: 'us-west-2'
           SOURCE_DIR: 'build'
-          # DEST_DIR: 'DIRNAMEHERE'

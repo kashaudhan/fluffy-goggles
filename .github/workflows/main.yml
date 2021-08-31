@@ -1,6 +1,6 @@
 # Github Action - npm run build && s3 sync ./dist
 # save to .github/workflows/deploy-s3.yml
-name: deploy-to-S3 (2019-11-26)
+name: deploy-to-S3
 on:
   push:
     branches:
